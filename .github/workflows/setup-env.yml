@@ -29,7 +29,7 @@ jobs:
           - '3.7'
           - '3.8'
           - '3.9'
-        ansible-version:
+        ansible-core-version:
           - stable-2.9
           - stable-2.10
           - stable-2.12
