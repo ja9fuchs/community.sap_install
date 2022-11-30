@@ -12,7 +12,7 @@ runs:
   steps:
 
     - name: Set up Python
-      uses: actions/setup-python@v4
+      uses: actions/setup-python@v3
       with:
         python-version: ${{ matrix.python-version }}
         cache: 'pip'
