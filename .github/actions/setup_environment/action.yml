@@ -12,11 +12,11 @@ runs:
   steps:
 
     - name: Set up Python
-      uses: actions/setup-python@v2
+      uses: actions/setup-python@v4
       with:
         python-version: ${{ matrix.python-version }}
         cache: 'pip'
-        cache-dependency-path: '**/requirements.txt'
+#        cache-dependency-path: '**/requirements.txt'
 
     - name: Install pip dependencies
       shell: bash
