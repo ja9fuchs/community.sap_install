@@ -34,10 +34,9 @@ jobs:
       - name: Revision
         id: changed-files
         run: |
-          git branch -a
-          BASE=$(diff -u <(git rev-list --first-parent HEAD) <(git rev-list --first-parent refs/remotes/origin/dev) | sed -ne 's/^ //p' | head -1)
-          git diff --name-only HEAD ${BASE} >> $GITHUB_OUTPUT
-          echo $GITHUB_WORKSPACE
+          PARENT='origin/dev'
+          BASE=$(diff -u <(git rev-list --first-parent HEAD) <(git rev-list --first-parent ${PARENT}) | sed -ne 's/^ //p' | head -1)
+          echo $(git diff --name-only HEAD ${BASE}) >> $GITHUB_OUTPUT
 
 
   list:
