@@ -22,6 +22,11 @@ runs:
       shell: bash
       run: pip install -r requirements.txt
 
-    - name: Install ansible versions
+    # ansible-core base version is defined in requirements.txt
+    # This base version will be part of the GH action cache and is updated
+    # for additional version matrix tests
+    - name: Update ansible version
       shell: bash
-      run: pip install ansible-core==${{ matrix.ansible-core-version }}
+      run: |
+        pip install --upgrade ansible-core==${{ matrix.ansible-core-version }}
+        pip install --upgrade ansible-lint==${{ matrix.ansible-lint-version }}

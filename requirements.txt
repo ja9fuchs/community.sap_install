@@ -1,4 +1,4 @@
 wheel
 yamllint
-ansible-lint==6.8.6
+ansible-lint==5.4.0
 ansible-core==2.11
