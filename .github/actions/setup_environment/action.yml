@@ -19,7 +19,9 @@ runs:
         cache-dependency-path: '**/requirements.txt'
 
     - name: Install pip dependencies
+      shell: bash
       run: pip install -e . -r requirements.txt
 
     - name: Install ansible versions
+      shell: bash
       run: pip install ansible==${{ matrix.ansible-version }}
