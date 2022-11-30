@@ -4,6 +4,7 @@
 name: Run ansible-lint
 
 on:
+  push:
   workflow_call:     # make it a reusable workflow
   workflow_dispatch: # enable manual call
     inputs:
