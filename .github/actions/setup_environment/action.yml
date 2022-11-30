@@ -29,4 +29,3 @@ runs:
       shell: bash
       run: |
         pip install --upgrade ansible-core==${{ matrix.ansible-core-version }}
-        pip install --upgrade ansible-lint==${{ matrix.ansible-lint-version }}

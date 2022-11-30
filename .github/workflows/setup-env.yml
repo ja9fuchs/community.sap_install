@@ -16,11 +16,10 @@ on:
         options:
           - eins
           - zwei
-          
 
 jobs:
   setup:
-    name: setup
+    name: Test environment setup
     runs-on: ubuntu-latest
 
     strategy:
@@ -33,24 +32,18 @@ jobs:
           - '2.12'
           - '2.13'
           - '2.14'
-        ansible-lint-version:
-          - '6.8.6'
         exclude:
           - python-version: '3.8'
             ansible-core-version: '2.14'
           - python-version: '3.9'
             ansible-core-version: '2.11'
-        include:
-          - python-version: '3.8'
-            ansible-core-version: '2.11'
-            ansible-lint-verison: '5.4.0'
 
       # Do not cancel all jobs if one of the matrix jobs fails
       fail-fast: false
 
     steps:
-      - name: Check out the code
-        uses: actions/checkout@v3
+#      - name: Check out the code
+#        uses: actions/checkout@v3
 
       - name: Setup test environment
         uses: ./.github/actions/setup_environment
