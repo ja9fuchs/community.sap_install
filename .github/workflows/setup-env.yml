@@ -1,0 +1,35 @@
+---
+# This REUSABLE workflow
+# - checks out the code
+# - configures the Python environment (using composite action)
+
+name: Set up Test Environment
+
+on: workflow_call
+
+jobs:
+  setup:
+    name: setup
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+      # Do not cancel all jobs if one of the matrix jobs fails
+      fail-fast: false
+        python-version:
+          - 3.7
+          - 3.8
+          - 3.9
+        ansible-version:
+          - stable-2.9
+          - stable-2.10
+          - stable-2.12
+          - stable-2.13
+          - stable-2.14
+
+    steps:
+      - name: Check out the code
+        uses: actions/checkout@v3
+
+      - name: Setup test environment
+        uses: ./.github/actions/setup_environment

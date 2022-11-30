@@ -1,0 +1,25 @@
+---
+# Composite action to use as step in workflows
+#
+# - version matrix is defined in a workflow's job strategy
+
+name: 'Setup Python'
+description: 'Install Python, pip dependencies and ansible'
+
+runs:
+  using: 'composite'
+
+  steps:
+
+    - name: Set up Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: ${{ matrix.python-version }}
+        cache: 'pip'
+        cache-dependency-path: '**/requirements.txt'
+
+    - name: Install pip dependencies
+      run: pip install -e . -r requirements.txt
+
+    - name: Install ansible versions
+      run: pip install ansible==${{ matrix.ansible-version }}
