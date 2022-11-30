@@ -40,9 +40,11 @@ jobs:
             ansible-core-version: '2.14'
           - python-version: '3.9'
             ansible-core-version: '2.11'
-          - ansible-core-version: '2.11'
-            ansible-lint-version: '6.8.6'
-        
+        include:
+          - python-version: '3.8'
+            ansible-core-version: '2.11'
+            ansible-lint-verison: '5.4.0'
+
       # Do not cancel all jobs if one of the matrix jobs fails
       fail-fast: false
 
