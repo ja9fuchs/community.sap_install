@@ -15,6 +15,9 @@ on:
 #          - eins
 #          - zwei
 
+permissions:
+  contents: read
+
 jobs:
   setup:
     name: test something
