@@ -25,16 +25,21 @@ jobs:
 
     strategy:
       matrix:
-        python-version:
-          - '3.7'
-          - '3.8'
-          - '3.9'
-        ansible-core-version:
-          - '2.9'
-          - '2.10'
-          - '2.12'
-          - '2.13'
-          - '2.14'
+        python-version: []
+        ansible-core-version: []
+        include:
+          - python-version: '3.8'
+            ansible-core-version: 
+              - '2.9'
+              - '2.10'
+              - '2.11'
+              - '2.12'
+              - '2.13'
+          - python-version: '3.9'
+            ansible-core-version:
+              - '2.12'
+              - '2.13'
+              - '2.14'
       # Do not cancel all jobs if one of the matrix jobs fails
       fail-fast: false
 
