@@ -1,0 +1,146 @@
+---
+name: 🧪
+
+on:   # yamllint disable-line rule:truthy
+#  push:
+#  pull_request:
+	workflow_dispatch:
+
+jobs:
+  tests:
+    name: >-
+      Ⓐ${{ matrix.ansible-core-version }}
+      @
+      🐍${{ matrix.origin-python-version }}:
+      ${{ matrix.testing-type }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 3
+    strategy:
+      fail-fast: false
+      matrix:
+        ansible-core-version:
+        - ''
+        collection-root:
+        - ''
+        collection-src-directory:
+        - ''
+        docker-image:
+        - default
+        git-checkout-ref:
+        - ''
+        origin-python-version:
+        - ''
+        pre-action-cmd:
+        - ''
+        pre-test-cmd:
+        - ''
+        target:
+        - ''
+        target-python-version:
+        - ''
+        test-deps:
+        - ''
+        testing-type:
+        - ''
+        exclude:
+        - ansible-core-version: ''
+        include:
+        - ansible-core-version: stable-2.11
+          origin-python-version: '3.6'
+          testing-type: sanity
+          collection-root: .
+        - ansible-core-version: stable-2.12
+          origin-python-version: auto
+          testing-type: sanity
+        - ansible-core-version: devel
+          origin-python-version: auto
+          testing-type: units
+        - ansible-core-version: stable-2.13
+          origin-python-version: '3.9'
+          testing-type: integration
+        - ansible-core-version: stable-2.13
+          # NOTE: A missing `collection-src-directory` input causes
+          # NOTE: fetching the repo from GitHub.
+          origin-python-version: auto
+          testing-type: integration
+#          test-deps: >-
+#            --no-deps
+#            git+https://github.com/ansible-collections/ansible.netcommon.git
+        - ansible-core-version: stable-2.14
+#          collection-root: .internal/ansible/ansible_collections/internal/test
+#          collection-src-directory: ./.tmp-action-checkout
+          origin-python-version: >-
+            3.10
+          testing-type: integration
+#          test-deps: >-
+#            git+https://github.com/ansible-collections/ansible.utils.git
+#            git+https://github.com/ansible-collections/ansible.netcommon.git
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v3
+#      with:
+#        path: .tmp-action-checkout/
+
+#    - name: Run a pre-action command
+#      if: matrix.pre-action-cmd
+#      run: ${{ matrix.pre-action-cmd }}
+#      working-directory: ./.tmp-action-checkout/
+
+    - name: Run ${{ matrix.testing-type }} tests
+      id: tests
+#      uses: ./.tmp-action-checkout/
+      with:
+        ansible-core-version: ${{ matrix.ansible-core-version }}
+#        collection-root: ${{ matrix.collection-root }}
+#        collection-src-directory: ${{ matrix.collection-src-directory }}
+        docker-image: ${{ matrix.docker-image }}
+        git-checkout-ref: ${{ matrix.git-checkout-ref }}
+        origin-python-version: ${{ matrix.origin-python-version }}
+        pre-test-cmd: ${{ matrix.pre-test-cmd }}
+        target: ${{ matrix.target }}
+        target-python-version: ${{ matrix.target-python-version }}
+        testing-type: ${{ matrix.testing-type }}
+        test-deps: ${{ matrix.test-deps }}
+
+    - name: Log the outputs
+      run: |
+        echo "ansible-playbook-executable=${{
+          steps.tests.outputs.ansible-playbook-executable
+        }}"
+        echo "ansible-test-executable=${{
+          steps.tests.outputs.ansible-test-executable
+        }}"
+        echo "checkout-directory=${{
+          steps.tests.outputs.checkout-directory
+        }}"
+        echo "collection-fqcn=${{
+          steps.tests.outputs.collection-fqcn
+        }}"
+        echo "collection-name=${{
+          steps.tests.outputs.collection-name
+        }}"
+        echo "collection-namespace=${{
+          steps.tests.outputs.collection-namespace
+        }}"
+        echo "origin-python-path=${{
+          steps.tests.outputs.origin-python-path
+        }}"
+        echo "origin-python-version=${{
+          steps.tests.outputs.origin-python-version
+        }}"
+  check:  # This job does nothing and is only used for the branch protection
+    if: always()
+
+    needs:
+    - tests
+
+    runs-on: ubuntu-latest
+
+    timeout-minutes: 1
+
+    steps:
+    - name: Decide whether the needed jobs succeeded or failed
+      uses: re-actors/alls-green@release/v1
+      with:
+        jobs: ${{ toJSON(needs) }}
+...
