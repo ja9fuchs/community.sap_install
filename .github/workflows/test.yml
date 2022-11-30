@@ -33,5 +33,6 @@ jobs:
 
       - name: Review 
         uses: actions/dependency-review-action@v3
-        base-ref: origin/dev
-        head-ref: origin/main
+        with:
+          base-ref: origin/dev
+          head-ref: origin/main
