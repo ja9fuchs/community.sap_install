@@ -3,16 +3,16 @@
 
 name: Run ansible-lint
 
-on: 
-	workflow_call:     # make it reusable by other workflows
-	workflow_dispatch: # enable manual execution of this workflow
-		inputs:
-			role:
-				description: 'Role to test'
-				required: true
-				default: 'warning'
-				type: choice
-				options: ${{ matrix.roles }}
+on:
+  workflow_call:     # make it a reusable workflow
+  workflow_dispatch: # enable manual call
+    inputs:
+      role:
+        description: 'Role to test'
+        required: true
+        default: 'warning'
+        type: choice
+        options: ${{ matrix.roles }}
 
 jobs:
   ansible-lint:
