@@ -1,26 +1,23 @@
 ---
-# This REUSABLE workflow
-# - checks out the code
-# - configures the Python environment (using composite action)
+# This REUSABLE workflow runs ansible-lint
 
-name: Set up Test Environment
+name: Run ansible-lint
 
 on: 
-  push:
-  workflow_call:
-  workflow_dispatch:
-    input:
-      test:
-        description: 'role'
-        type: choice
-        options:
-          - eins
-          - zwei
+	workflow_call:     # make it reusable by other workflows
+	workflow_dispatch: # enable manual execution of this workflow
+		inputs:
+			role:
+				description: 'Role to test'
+				required: true
+				default: 'warning'
+				type: choice
+				options: ${{ matrix.roles }}
 
 jobs:
-  setup:
-    name: Env Setup
-    runs-on: ubuntu-latest
+  ansible-lint:
+    name: ansible-lint
+    runs_on: ubuntu-latest
 
     strategy:
       matrix:
@@ -42,9 +39,15 @@ jobs:
       fail-fast: false
 
     steps:
-      # Check out code to get files and workflow requirements
       - name: Check out the code
         uses: actions/checkout@v3
 
       - name: Setup test environment
         uses: ./.github/actions/setup_environment
+
+      - name: Update ansible-lint
+        shell: bash
+        if: !${{ matrix.ansible-core-version == '2.11' }}
+        run: |
+          pip install --upgrade ansible-lint==6.8.6
+
