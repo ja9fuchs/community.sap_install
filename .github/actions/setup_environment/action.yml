@@ -25,7 +25,3 @@ runs:
     - name: Install ansible versions
       shell: bash
       run: pip install ansible-core==${{ matrix.ansible-core-version }}
-
-    - name: Display Ansible version
-      shell: bash
-      run: ansible --version
