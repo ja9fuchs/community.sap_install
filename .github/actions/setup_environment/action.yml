@@ -20,7 +20,7 @@ runs:
 
     - name: Install pip dependencies
       shell: bash
-      run: pip install -e . -r requirements.txt
+      run: pip install -r requirements.txt
 
     - name: Install ansible versions
       shell: bash
