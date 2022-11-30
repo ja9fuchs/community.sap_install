@@ -42,8 +42,9 @@ jobs:
       fail-fast: false
 
     steps:
-#      - name: Check out the code
-#        uses: actions/checkout@v3
+      # Check out code to get files and workflow requirements
+      - name: Check out the code
+        uses: actions/checkout@v3
 
       - name: Setup test environment
         uses: ./.github/actions/setup_environment
