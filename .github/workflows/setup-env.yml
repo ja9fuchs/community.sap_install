@@ -30,11 +30,11 @@ jobs:
           - '3.8'
           - '3.9'
         ansible-core-version:
-          - stable-2.9
-          - stable-2.10
-          - stable-2.12
-          - stable-2.13
-          - stable-2.14
+          - '2.9'
+          - '2.10'
+          - '2.12'
+          - '2.13'
+          - '2.14'
       # Do not cancel all jobs if one of the matrix jobs fails
       fail-fast: false
 
