@@ -6,6 +6,7 @@
 name: Set up Test Environment
 
 on: 
+  push:
   workflow_call:
   workflow_dispatch:
     input:
