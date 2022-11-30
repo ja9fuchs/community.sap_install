@@ -32,7 +32,7 @@ jobs:
       - name: Revision
         id: changed-files
         run: |
-          BASE=$(diff -u <(git rev-list --first-parent HEAD) <(git rev-list --first-parent dev) | sed -ne 's/^ //p' | head -1)
+          BASE=$(diff -u <(git rev-list --first-parent HEAD) <(git rev-list --first-parent refs/remotes/origin/dev) | sed -ne 's/^ //p' | head -1)
           git diff --name-only HEAD ${BASE} >> $GITHUB_OUTPUT
 
   list:
