@@ -15,27 +15,32 @@ on:
 #          - eins
 #          - zwei
 
-permissions:
-  contents: read
 
 jobs:
   setup:
-    name: test something
+    name: test changed files
     runs-on: ubuntu-latest
 
-#    strategy:
-#      matrix:
-#
-#      # Do not cancel all jobs if one of the matrix jobs fails
-#      fail-fast: false
+    outputs:
+      chfiles: ${{ steps.changed-files.outputs.test }}
 
     steps:
       # Check out code to get files and workflow requirements
       - name: Check out the code
         uses: actions/checkout@v3
 
-      - name: Review 
-        uses: actions/dependency-review-action@v3
-        with:
-          base-ref: origin/dev
-          head-ref: origin/main
+      - name: Revision
+        id: changed-files
+        run: |
+          BASE=$(diff -u <(git rev-list --first-parent HEAD) <(git rev-list --first-parent dev) | sed -ne 's/^ //p' | head -1)
+          git diff --name-only HEAD ${BASE} >> $GITHUB_OUTPUT
+
+  list:
+    name: List changed files
+    runs-on: ubuntu-latest
+
+    steps:
+        
+      - shell: bash
+        run: |
+          echo ${{ needs.setup.outputs.chfiles }}
