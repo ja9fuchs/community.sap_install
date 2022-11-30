@@ -78,8 +78,8 @@ jobs:
     steps:
     - name: Checkout
       uses: actions/checkout@v3
-#      with:
-#        path: .tmp-action-checkout/
+      with:
+        path: .tmp-action-checkout/
 
 #    - name: Run a pre-action command
 #      if: matrix.pre-action-cmd
@@ -88,7 +88,7 @@ jobs:
 
     - name: Run ${{ matrix.testing-type }} tests
       id: tests
-#      uses: ./.tmp-action-checkout/
+      uses: ./.tmp-action-checkout/
       with:
         ansible-core-version: ${{ matrix.ansible-core-version }}
 #        collection-root: ${{ matrix.collection-root }}
