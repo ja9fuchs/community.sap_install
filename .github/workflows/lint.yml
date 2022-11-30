@@ -42,6 +42,8 @@ jobs:
     steps:
       - name: Check out the code
         uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
 
       - name: Setup test environment
         uses: ./.github/actions/setup_environment
@@ -52,3 +54,8 @@ jobs:
         run: |
           pip install --upgrade ansible-lint==6.8.6
 
+      - name: Ansible-lint changed files
+        run: |
+          PARENT='origin/dev'
+          BASE=$(diff -u <(git rev-list --first-parent HEAD) <(git rev-list --first-parent ${PARENT}) | sed -ne 's/^ //p' | head -1)
+          ansible-lint <(git diff --name-only HEAD ${BASE})
