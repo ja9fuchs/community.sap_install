@@ -29,7 +29,9 @@ jobs:
           - '3.8'
           - '3.9'
         ansible-core-version:
-          - '6.6.0'
+          - '4.0.0'
+          - '5.0.0'
+          - '6.0.0'
           - '7.0.0'
 #          - '2.9'
 #          - '2.10'
@@ -40,8 +42,8 @@ jobs:
         exclude:
           - python-version: '3.8'
             ansible-core-version: '7.0.0'
-#          - python-version: '3.9'
-#            ansible-core-version: '2.9'
+          - python-version: '3.9'
+            ansible-core-version: '4.0.0'
 #          - python-version: '3.9'
 #            ansible-core-version: '2.10'
 #          - python-version: '3.9'
