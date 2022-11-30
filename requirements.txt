@@ -1,2 +1,2 @@
-ansible-lint==6.8.6
+wheel
 yamllint

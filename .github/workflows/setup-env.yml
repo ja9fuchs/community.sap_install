@@ -29,25 +29,15 @@ jobs:
           - '3.8'
           - '3.9'
         ansible-core-version:
-          - '4.0.0'
-          - '5.0.0'
-          - '6.0.0'
-          - '7.0.0'
-#          - '2.9'
-#          - '2.10'
-#          - '2.11'
-#          - '2.12'
-#          - '2.13'
-#          - '2.14'
+          - '2.11'
+          - '2.12'
+          - '2.13'
+          - '2.14'
         exclude:
           - python-version: '3.8'
-            ansible-core-version: '7.0.0'
+            ansible-core-version: '2.14'
           - python-version: '3.9'
-            ansible-core-version: '4.0.0'
-#          - python-version: '3.9'
-#            ansible-core-version: '2.10'
-#          - python-version: '3.9'
-#            ansible-core-version: '2.11'
+            ansible-core-version: '2.11'
       # Do not cancel all jobs if one of the matrix jobs fails
       fail-fast: false
 
