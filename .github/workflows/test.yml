@@ -22,7 +22,7 @@ jobs:
     runs-on: ubuntu-latest
 
     outputs:
-      chfiles: ${{ steps.changed-files.outputs.test }}
+      chfiles: ${{ steps.changed-files.output }}
 
     steps:
       # Check out code to get files and workflow requirements
@@ -36,7 +36,7 @@ jobs:
         run: |
           PARENT='origin/dev'
           BASE=$(diff -u <(git rev-list --first-parent HEAD) <(git rev-list --first-parent ${PARENT}) | sed -ne 's/^ //p' | head -1)
-          echo $(git diff --name-only HEAD ${BASE}) >> $GITHUB_OUTPUT
+          echo $(git diff --name-only HEAD ${BASE}) | base64 >> $GITHUB_OUTPUT
 
 
   list:
