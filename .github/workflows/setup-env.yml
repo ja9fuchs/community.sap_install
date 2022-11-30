@@ -5,7 +5,17 @@
 
 name: Set up Test Environment
 
-on: workflow_call
+on: 
+  workflow_call:
+  workflow_dispatch:
+    input:
+      test:
+        description: 'role'
+        type: choice
+        options:
+          - eins
+          - zwei
+          
 
 jobs:
   setup:
