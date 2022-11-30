@@ -13,7 +13,7 @@ on:
         required: true
         default: 'warning'
         type: choice
-        options: ${{ matrix.roles }}
+#        options: ${{ matrix.roles }}
 
 jobs:
   ansible-lint:
