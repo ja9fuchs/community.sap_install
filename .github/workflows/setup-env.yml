@@ -25,10 +25,6 @@ jobs:
 
     strategy:
       matrix:
-        python-version:
-          - ''
-        ansible-core-version:
-          - ''
         include:
           - python-version: '3.8'
             ansible-core-version: 
