@@ -52,7 +52,7 @@ jobs:
         shell: bash
         if: matrix.ansible-core-version != '2.11'
         run: |
-          pip install --upgrade ansible-lint==6.8.6
+          pip install --upgrade ansible-lint==6.7.0
 
       - name: Ansible-lint changed files
         run: |
