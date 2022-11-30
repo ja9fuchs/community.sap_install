@@ -59,4 +59,5 @@ jobs:
           PARENT='origin/dev'
           BASE=$(diff -u <(git rev-list --first-parent HEAD) <(git rev-list --first-parent ${PARENT}) | sed -ne 's/^ //p' | head -1)
           git diff --name-only HEAD ${BASE}
-          ansible-lint <(git diff --name-only HEAD ${BASE})
+          #ansible-lint <(git diff --name-only HEAD ${BASE})
+          ansible-lint roles/sap_ha_pacemaker_cluster/tasks/platform/register_sysinfo_vm_ibmcloud.yml
