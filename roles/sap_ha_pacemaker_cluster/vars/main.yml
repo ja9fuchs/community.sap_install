@@ -1,15 +1,14 @@
 ---
 # SAP System IDs that are reserved and must not be used
 # Reference: SAP Note 1979280
-__sap_sid_prohibited: ['ADD', 'ADM', 'ALL', 'AMD', 'AND', 'ANY', 'ARE', 'ASC',
-                       'AUX', 'AVG', 'BIN', 'BIT', 'CDC', 'COM', 'CON', 'DAA',
-                       'DBA', 'DBM', 'DBO', 'DTD', 'ECO', 'END', 'EPS', 'EXE',
-                       'FOR', 'GET', 'GID', 'IBM', 'INT', 'KEY', 'LIB', 'LOG',
-                       'LPT', 'MAP', 'MAX', 'MEM', 'MIG', 'MIN', 'MON', 'NET',
-                       'NIX', 'NOT', 'NUL', 'OFF', 'OLD', 'OMS', 'OUT', 'PAD',
-                       'PRN', 'RAW', 'REF', 'ROW', 'SAP', 'SET', 'SGA', 'SHG',
-                       'SID', 'SQL', 'SUM', 'SYS', 'TMP', 'TOP', 'TRC', 'UID',
-                       'USE', 'USR', 'VAR']
+__sap_ha_pacemaker_cluster_sid_prohibited:
+  ['ADD', 'ADM', 'ALL', 'AMD', 'AND', 'ANY', 'ARE', 'ASC', 'AUX', 'AVG', 'BIN',
+   'BIT', 'CDC', 'COM', 'CON', 'DAA', 'DBA', 'DBM', 'DBO', 'DTD', 'ECO', 'END',
+   'EPS', 'EXE', 'FOR', 'GET', 'GID', 'IBM', 'INT', 'KEY', 'LIB', 'LOG', 'LPT',
+   'MAP', 'MAX', 'MEM', 'MIG', 'MIN', 'MON', 'NET', 'NIX', 'NOT', 'NUL', 'OFF',
+   'OLD', 'OMS', 'OUT', 'PAD', 'PRN', 'RAW', 'REF', 'ROW', 'SAP', 'SET', 'SGA',
+   'SHG', 'SID', 'SQL', 'SUM', 'SYS', 'TMP', 'TOP', 'TRC', 'UID', 'USE', 'USR',
+   'VAR']
 
 # ansible_facts required by the role
 __sap_ha_pacemaker_cluster_required_facts:
@@ -19,7 +18,7 @@ __sap_ha_pacemaker_cluster_required_facts:
   - distribution # subset: min, hardware
   - distribution_major_version # subset: min, hardware
   - distribution_version # subset: min, hardware
-  - hostname #ubset: min, hardware
+  - hostname # subset: min, hardware
   - os_family # subset: min, hardware
 #  - selinux # subset: min, hardware
 #  - service_mgr # subset: min, hardware
@@ -67,13 +66,14 @@ __sap_ha_pacemaker_cluster_healthcheck_resource_list:
 
 # Health check default port as string
 # Note: difference between HANA primary and read-only required
-# Ports must be pre-defined empty to skip entering construct_vars_vip_resources_* includes when not overridden.
-sap_ha_pacemaker_cluster_healthcheck_hana_primary_port: ''        #"626{{ sap_ha_pacemaker_cluster_hana_instance_nr | default('00') }}"
-sap_ha_pacemaker_cluster_healthcheck_hana_secondary_port: ''      #"627{{ sap_ha_pacemaker_cluster_hana_instance_nr | default('00') }}"
-sap_ha_pacemaker_cluster_healthcheck_hana_nwas_abap_ascs_port: '' #"626{{ sap_ha_pacemaker_cluster_nwas_abap_ascs_instance_nr | default('00') }}"
-sap_ha_pacemaker_cluster_healthcheck_hana_nwas_abap_ers_port: ''  #"626{{ sap_ha_pacemaker_cluster_nwas_abap_ers_instance_nr | default('00') }}"
-sap_ha_pacemaker_cluster_healthcheck_hana_nwas_abap_pas_port: ''  #"626{{ sap_ha_pacemaker_cluster_nwas_abap_pas_instance_nr | default('00') }}"
-sap_ha_pacemaker_cluster_healthcheck_hana_nwas_abap_aas_port: ''  #"626{{ sap_ha_pacemaker_cluster_nwas_abap_aas_instance_nr | default('00') }}"
+# Ports must be pre-defined empty to skip entering construct_vars_vip_resources_*
+# includes when not overridden.
+sap_ha_pacemaker_cluster_healthcheck_hana_primary_port: ''
+sap_ha_pacemaker_cluster_healthcheck_hana_secondary_port: ''
+sap_ha_pacemaker_cluster_healthcheck_hana_nwas_abap_ascs_port: ''
+sap_ha_pacemaker_cluster_healthcheck_hana_nwas_abap_ers_port: ''
+sap_ha_pacemaker_cluster_healthcheck_hana_nwas_abap_pas_port: ''
+sap_ha_pacemaker_cluster_healthcheck_hana_nwas_abap_aas_port: ''
 
 # (cloud) platform helper variable - leave empty for default = not cloud
 __sap_ha_pacemaker_cluster_platform: ''
@@ -93,8 +93,8 @@ __sap_ha_pacemaker_cluster_no_log: true
 # Remove this section when validated.
 #
 # Never set defaults for these:
-#__sap_ha_pacemaker_cluster_cluster_name:
-#__sap_ha_pacemaker_cluster_hacluster_user_password:
+# __sap_ha_pacemaker_cluster_cluster_name:
+# __sap_ha_pacemaker_cluster_hacluster_user_password:
 
 
 # Pre-define internal optional parameters to avoid defaults in the code:
