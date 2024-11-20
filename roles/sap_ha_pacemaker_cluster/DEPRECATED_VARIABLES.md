@@ -16,7 +16,7 @@ All deprecated variables offer time limited backwards compatibility that will be
 | ~~Old variable~~<br>New variable | Backwards compatible | Reason |
 | --------- | --------- | --------- |
 | ~~sap_ha_pacemaker_cluster_nwas_abap_sid~~<br>sap_ha_pacemaker_cluster_nwas_sid | :heavy_check_mark: | Removal of `_abap_` |
-| ~~sap_ha_pacemaker_cluster_nwas_abap_ascs_instance_nr~~<b>sap_ha_pacemaker_cluster_nwas_ascs_instance_nr | :heavy_check_mark: | Removal of `_abap_` |
+| ~~sap_ha_pacemaker_cluster_nwas_abap_ascs_instance_nr~~<br>sap_ha_pacemaker_cluster_nwas_ascs_instance_nr | :heavy_check_mark: | Removal of `_abap_` |
 | ~~sap_ha_pacemaker_cluster_nwas_abap_ers_instance_nr~~<br>sap_ha_pacemaker_cluster_nwas_ers_instance_nr | :heavy_check_mark: | Removal of `_abap_` |
 | ~~sap_ha_pacemaker_cluster_nwas_abap_ascs_sapinstance_instance_name~~<br>sap_ha_pacemaker_cluster_nwas_ascs_sapinstance_instance_name | :heavy_check_mark: | Removal of `_abap_` |
 | ~~sap_ha_pacemaker_cluster_nwas_abap_ers_sapinstance_instance_name~~<br>sap_ha_pacemaker_cluster_nwas_ers_sapinstance_instance_name | :heavy_check_mark: | Removal of `_abap_` |
