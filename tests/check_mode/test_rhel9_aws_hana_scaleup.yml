@@ -1,0 +1,67 @@
+---
+- name: Test sap_ha_pacemaker_cluster - RHEL 9 + AWS + HANA Scaleup
+  hosts: hana_nodes
+  gather_facts: false
+
+  pre_tasks:
+    - name: Load mock facts for RHEL 9 + AWS
+      include_vars:
+        file: fixtures/facts/rhel9_aws.yml
+
+    - name: Set facts from mock data
+      set_fact:
+        ansible_system_vendor: "{{ ansible_system_vendor }}"
+        ansible_product_name: "{{ ansible_product_name }}"
+        ansible_os_family: "{{ ansible_os_family }}"
+        ansible_distribution: "{{ ansible_distribution }}"
+        ansible_distribution_major_version: "{{ ansible_distribution_major_version }}"
+
+  vars:
+    # ha_cluster LSR version specification
+    sap_ha_pacemaker_cluster_system_roles_collection: fedora.linux_system_roles
+
+    # Host type and scenario
+    sap_ha_pacemaker_cluster_host_type:
+      - hana_scaleup_perf
+
+    # SAP HANA configuration
+    sap_ha_pacemaker_cluster_hana_sid: RH1
+    sap_ha_pacemaker_cluster_hana_instance_nr: "00"
+
+    # Virtual IPs
+    sap_ha_pacemaker_cluster_vip_hana_primary_ip_address: 192.168.1.100
+    sap_ha_pacemaker_cluster_vip_hana_secondary_ip_address: 192.168.1.101
+
+    # Cluster authentication
+    sap_ha_pacemaker_cluster_hacluster_user_password: TestPassword123
+
+    # Cluster node definition
+    sap_ha_pacemaker_cluster_cluster_nodes:
+      - node_name: node1
+        node_ip: 172.28.0.10
+        hana_site: DC1
+      - node_name: node2
+        node_ip: 172.28.0.11
+        hana_site: DC2
+
+    # Enable config varfile generation
+    sap_ha_pacemaker_cluster_create_config_varfile: true
+    sap_ha_pacemaker_cluster_create_config_dest: /tmp/rhel9_aws_hana_config.yml
+
+  roles:
+    - role: ../../roles/sap_ha_pacemaker_cluster
+
+  post_tasks:
+    - name: Verify config file was created
+      stat:
+        path: /tmp/rhel9_aws_hana_config.yml
+      register: config_file
+      delegate_to: localhost
+      run_once: true
+
+    - name: Fail if config not generated
+      fail:
+        msg: "Config varfile not generated"
+      when: not config_file.stat.exists
+      delegate_to: localhost
+      run_once: true

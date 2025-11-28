@@ -1,0 +1,28 @@
+---
+# AWS EC2 platform detection facts
+ansible_system_vendor: "Amazon EC2"
+ansible_product_name: "r5.8xlarge"
+ansible_chassis_vendor: "Amazon EC2"
+ansible_bios_vendor: "Amazon EC2"
+
+# RHEL 9 OS facts
+ansible_os_family: "RedHat"
+ansible_distribution: "RedHat"
+ansible_distribution_major_version: "9"
+ansible_distribution_version: "9.3"
+
+# System facts
+ansible_architecture: "x86_64"
+ansible_hostname: "node1"
+ansible_fqdn: "node1.example.com"
+ansible_default_ipv4:
+  address: "172.28.0.10"
+  interface: "eth0"
+
+# Play hosts (simulates 2-node cluster)
+ansible_play_hosts:
+  - node1
+  - node2
+ansible_play_hosts_all:
+  - node1
+  - node2

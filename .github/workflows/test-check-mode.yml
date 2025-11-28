@@ -1,0 +1,56 @@
+---
+name: Check Mode Tests
+
+on:
+  pull_request:
+    paths:
+      - 'roles/sap_ha_pacemaker_cluster/**'
+      - 'tests/check_mode/**'
+  push:
+    branches:
+      - main
+
+jobs:
+  check-mode-tests:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        os:
+          - rhel9
+          - sles15
+        scenario:
+          - aws_hana_scaleup
+      fail-fast: false
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install Ansible
+        run: |
+          pip install ansible-core==2.16.0
+          ansible-galaxy collection install fedora.linux_system_roles:==1.25.4
+
+      - name: Run check mode test
+        run: |
+          cd tests/check_mode
+          ansible-playbook -i inventory/aws_hana_2node \
+            test_${{ matrix.os }}_${{ matrix.scenario }}.yml \
+            --check -vv
+
+      - name: Verify config generation
+        run: |
+          test -f /tmp/${{ matrix.os }}_aws_hana_config.yml
+          echo "Config file generated successfully"
+
+      - name: Upload generated config
+        uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: config-${{ matrix.os }}-${{ matrix.scenario }}
+          path: /tmp/${{ matrix.os }}_aws_hana_config.yml

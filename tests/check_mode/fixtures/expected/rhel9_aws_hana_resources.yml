@@ -1,0 +1,40 @@
+---
+# Expected ha_cluster parameters for RHEL 9 + AWS + HANA scaleup
+expected_platform: cloud_aws_ec2_vs
+expected_os_family: RedHat
+
+expected_resource_count:
+  primitives_min: 5
+  primitives_max: 10
+  clones: 2
+  constraints_colocation_min: 2
+  constraints_order_min: 2
+
+expected_resources:
+  - agent: ocf:suse:SAPHanaTopology
+    id_pattern: "rsc_SAPHanaTop_RH1_HDB00"
+    required_attrs:
+      - SID: RH1
+      - InstanceNumber: "00"
+
+  - agent: ocf:suse:SAPHana
+    id_pattern: "rsc_SAPHana_RH1_HDB00"
+    required_attrs:
+      - SID: RH1
+      - InstanceNumber: "00"
+      - AUTOMATED_REGISTER: "true"
+
+  - agent: stonith:fence_aws
+    id_pattern: "rsc_fence_aws"
+    required_attrs:
+      - pcmk_delay_max: 45
+      - pcmk_reboot_action: "off"
+
+  - agent: ocf:heartbeat:IPaddr2
+    id_pattern: "vip.*primary"
+    required_attrs:
+      - ip: 192.168.1.100
+
+expected_cluster_properties:
+  - stonith-enabled: true
+  - concurrent-fencing: false
